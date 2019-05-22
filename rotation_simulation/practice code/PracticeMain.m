@@ -9,7 +9,7 @@ for i = 1:length(ellipSide)
 end
 
 % construct storage list
-DataStore = [5];
+DataStore = strings(1,5);
 % construct randomized object order list
 objectOrder = [5];
 for i = 1:length(objectOrder)
@@ -525,67 +525,65 @@ while ((GetSecs - t) < 60)
             %as well as saving data from selection in a list with
             %regard to the true identity of the selected mesh
             %based on the randomization process
-
-
-
-            %objss = [ LoadOBJFile([basepath 'exampleFormat.obj']) LoadOBJFile([basepath 'exampleFormat.obj']) ];
-
-
-
-            % Add the OBJS to moglmorpher for use as morph-shapes:
-            %for i=1:size(objss,2)
-             %   if ( textureon==1 )
-              %      objss{i}.texcoords = texcoords; % Add modified texture coords.
-               % end
-
-                %objs{i}.colors = rand(4, size(objs{i}.vertices, 2));
-                %objs{i}.colors(1:3,:) = 0.8;
-
-                %meshid(i) = moglmorpher('addMesh', objss{i}); %#ok<AGROW,NASGU>
-            %end
-
-            %count = moglmorpher('getMeshCount') %#ok<NOPRT,NASGU>
-
-            % Compute initial morphed shape for next frame, based on initial weights:
-            %moglmorpher('computeMorph', w, morphnormals);
-
+            datum = num2str(CountObj) + "~" + "L" + "~" + num2str(ellipSide(CountObj)) + "/";
+            
+            DataStore(CountObj) = datum;
+            
             CountObj = CountObj + 1;
 
-            disp(CountObj);
 
-            if (CountObj == 5)
+            if (CountObj == 6)
               % write data to file
+              info = "";
+              for i = 1:length(DataStore)
+                  info = info + DataStore(i);
+              end
+              temp = char(info);
+              temp(length(temp)) = [];
+              info = strcat(temp);
+              
               folder = dir("UserDataPrac");
               filer = fopen("UserDataPrac/" + num2str(length(folder) - 2), 'wt');
-              fprintf(filer, "1/1/1~1/1/1~...");
+              fprintf(filer, info);
               fclose(filer);
+              disp("end of simulation");
 
               %end simulation
               break;
             end
-            %KeyIsDown=0;
-
+            pause(1)
         end
 
         if ( KeyIsDown==1 && KeyCode(selectRight)==1 )
-
-            %datum = num2str(ellipSide(CountObj)) + "~" + "R" + "~" + num2str(objectOrder(CountObj));
-            %disp(datum);
+            
+            datum = num2str(CountObj) + "~" + "R" + "~" + num2str(ellipSide(CountObj)) + "/";
+            
+            DataStore(CountObj) = datum;
+            
             CountObj = CountObj + 1;
 
 
 
-            if (CountObj == 5)
+            if (CountObj == 6)
               % write data to file
+              info = "";
+              for i = 1:length(DataStore)
+                  info = info + DataStore(i);
+              end
+              temp = char(info);
+              temp(length(temp)) = [];
+              info = strcat(temp);
+                  
               folder = dir("UserDataPrac");
               filer = fopen("UserDataPrac/" + num2str(length(folder) - 2), 'wt');
-              fprintf(filer, "1/1/1~1/1/1~...");
+              fprintf(filer, info);
               fclose(filer);
+              disp("end of simulation");
 
               %end simulation
               break;
             end
-            %KeyIsDown=0;
+            pause(1)
         end
     end
 
